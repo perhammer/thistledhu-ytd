@@ -17,9 +17,12 @@ function upload() {
 }
 
 function grabAndAppend() {
-	local outfile="camera$1-`date "+%Y-%m-%d-%H:%M:%S"`.jpg"
+	local outfile="camera$1-`date +%Y-%m-%d-%H:%M:%S`.jpg"
+	local infiles="camera$1-`date +%Y`-*.jpg"
+	local renderfile="camera$1-`date +%Y`-ytd.gif"
 	curl --netrc-file .netrc_thistledhu -o $outfile http://camera$1/image.jpg
-	convert -delay 2 -loop 0 camera$1-*.jpg camera$1-ytd.gif
+	convert -delay 40 -loop 0 $infiles $renderfile
+	ln -sf $renderfile camera$1-ytd.gif 
 }
 
 function grabAllCams() {
@@ -30,4 +33,6 @@ function grabAllCams() {
 
 grabAllCams
 upload camera?-ytd.gif
+
+echo "Ran at `date +%Y-%m-%d-%H:%M:%S`" >> ytd.log
 
