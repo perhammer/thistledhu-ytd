@@ -20,7 +20,7 @@ function grabAndAppend() {
 	local outfile="camera$1-`date +%Y-%m-%d-%H:%M:%S`.jpg"
 	local infiles="camera$1-`date +%Y`-*.jpg"
 	local renderfile="camera$1-`date +%Y`-ytd.gif"
-	curl --netrc-file .netrc_thistledhu -o $outfile http://camera$1/image.jpg
+	curl -s -S --netrc-file .netrc_thistledhu -o $outfile http://camera$1/image.jpg
 	convert -delay 40 -loop 0 $infiles $renderfile
 	ln -sf $renderfile camera$1-ytd.gif 
 }
