@@ -6,14 +6,13 @@
 
 function ftpSteps() {
 	cat << STOP
-prompt off
 bin
 mput $*
 STOP
 }
 
 function upload() {
-	ftpSteps $* | gftp --netrc=.netrc_thistledhu thistledhu.net
+	ftpSteps $* | gftp -i --netrc=.netrc_thistledhu thistledhu.net
 }
 
 function grabAndAppend() {
