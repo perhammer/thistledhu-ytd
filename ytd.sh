@@ -25,7 +25,8 @@ function grabAndAppend() {
 	local renderfile="camera$1-`date +%Y`-ytd.gif"
 	curl -s -S --netrc-file $NETRC_FILE -o $outfile http://camera$1/image.jpg
 	convert -delay $FRAME_DELAY_TICKS -loop $ANIMATION_LOOP_COUNT $infiles $renderfile
-	ln -sf $renderfile camera$1-ytd.gif 
+	ln -sf $renderfile camera$1-ytd.gif
+	ffmpeg -i $renderfile -movflags faststart -pix_fmt yuv420p -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" camera$1-ytd.mp4
 }
 
 function grabAllCams() {
@@ -35,7 +36,8 @@ function grabAllCams() {
 }
 
 grabAllCams
-upload camera?-ytd.gif
+#upload camera?-ytd.gif
+upload camera?-ytd.mp4
 
 echo "Ran at `date +%Y-%m-%d-%H:%M:%S`" >> ytd.log
 
