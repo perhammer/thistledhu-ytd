@@ -26,7 +26,7 @@ function grabAndAppend() {
 	curl -s -S --netrc-file $NETRC_FILE -o $outfile http://camera$1/image.jpg
 	convert -delay $FRAME_DELAY_TICKS -loop $ANIMATION_LOOP_COUNT $infiles $renderfile
 	ln -sf $renderfile camera$1-ytd.gif
-	ffmpeg -i $renderfile -movflags faststart -pix_fmt yuv420p -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" -y camera$1-ytd.mp4
+	ffmpeg -hide_banner -nostats -loglevel warning -i $renderfile -movflags faststart -pix_fmt yuv420p -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" -y camera$1-ytd.mp4
 }
 
 function grabAllCams() {
